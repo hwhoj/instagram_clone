@@ -24,9 +24,9 @@ class _TabPageState extends State<TabPage> {
     return Scaffold(
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index){
-          setState(() {
+        currentIndex: _currentIndex, //바텀네비바 기본속성 > 현재선택한 인덱스를 표시해줌
+        onTap: (index) { //탭했을때 탭한 인덱스를 int형태로 불러옴
+          setState(() { //화면갱신 = setState
             _currentIndex = index;
           });
         },
