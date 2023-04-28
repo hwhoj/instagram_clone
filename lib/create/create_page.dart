@@ -1,7 +1,18 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
-class CreatePage extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:instagram_clone/create/create_model.dart';
+
+class CreatePage extends StatefulWidget {
   const CreatePage({Key? key}) : super(key: key);
+
+  @override
+  State<CreatePage> createState() => _CreatePageState();
+}
+
+class _CreatePageState extends State<CreatePage> {
+  final model = CreateModel();
+  File? _image; //null을 허용해주기위해서(처음에 사진이없는상태이니까) ?를 붙여줌
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +46,20 @@ class CreatePage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  //이미지 피커 실행(라이브러리 추가 필요)
+                  _image = await model.getImage(); //Future 타입을 받아오는거기때문에 await, async 써줌
+                  setState(() {
+                    //화면갱신
+                  });
+                },
                 child: const Text('이미지 선택'),
               ),
-              Image.network(
-                'https://www.mangboard.com/wp-content/uploads/mangboard/2017/04/07/F816_imageupload.png',
-                width: 300,
-              ),
+              if (_image != null)
+                Image.file(
+                  _image!, //_image는 변수선언에서 File?로 선언했기때문에 타입맞춰줘야함
+                  width: 300,
+                ),
             ],
           ),
         ),
