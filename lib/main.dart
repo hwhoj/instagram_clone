@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'tab/tab_page.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();//파이어베이스 설정 후 시뮬레이터 표시가 안될때 입력
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -13,12 +19,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-
-      ),
+      theme: ThemeData(),
       home: const TabPage(),
     );
   }
 }
-
-
