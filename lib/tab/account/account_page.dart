@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/tab/account/account_model.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final model = AccountModel();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Instagram Clone'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              model.logout();
+            },
             icon: const Icon(Icons.exit_to_app),
           ),
         ],

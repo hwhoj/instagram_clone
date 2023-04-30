@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
-import 'tab/tab_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:instagram_clone/auth/auth_gate.dart';
+
 import 'firebase_options.dart';
 
 void main() async {
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(),
-      home: const TabPage(),
+      home: const AuthGate(),
     );
   }
 }
