@@ -17,12 +17,19 @@ class AuthGate extends StatelessWidget {
         // User is not signed in
         if (!snapshot.hasData) {
           //if 유저 정보의 데이터가 없다면 로그인 화면을 보여줘라
-          return const SignInScreen(
-            providerConfigs: [
-              EmailProviderConfiguration(),
-            ],
-            //flutterfire 라이브러리에서 로그인화면을 구현해줌
-          );
+          return SignInScreen(
+              providerConfigs: const [
+                EmailProviderConfiguration(),
+                //flutterfire 라이브러리에서 로그인화면을 구현해줌
+              ],
+              headerBuilder: (context, constraints, _) {
+                return const Center(
+                  child: Text(
+                    'Instagram Clone',
+                    style: TextStyle(fontSize: 40),
+                  ),
+                );
+              });
         }
 
         // Render your application if authenticated
