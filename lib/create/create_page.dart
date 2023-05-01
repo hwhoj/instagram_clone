@@ -12,7 +12,15 @@ class CreatePage extends StatefulWidget {
 
 class _CreatePageState extends State<CreatePage> {
   final model = CreateModel();
+  final _titleTextController = TextEditingController();
   File? _image; //null을 허용해주기위해서(처음에 사진이없는상태이니까) ?를 붙여줌
+
+  @override
+  void dispose() {
+    _titleTextController.dispose();
+    //뭔솔?
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +29,11 @@ class _CreatePageState extends State<CreatePage> {
         title: const Text('새 게시물'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              if (_image != null && _titleTextController.text.isNotEmpty) {
+                model.uploadPost(_titleTextController.text, _image!);
+              }
+            },
             icon: const Icon(Icons.send),
           ),
         ],
@@ -35,6 +47,7 @@ class _CreatePageState extends State<CreatePage> {
             children: [
               TextField(
                 //게시물의 제목 text를 받아옴
+                controller: _titleTextController,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16.0),
@@ -48,7 +61,8 @@ class _CreatePageState extends State<CreatePage> {
               ElevatedButton(
                 onPressed: () async {
                   //이미지 피커 실행(라이브러리 추가 필요)
-                  _image = await model.getImage(); //Future 타입을 받아오는거기때문에 await, async 써줌
+                  _image =
+                  await model.getImage(); //Future 타입을 받아오는거기때문에 await, async 써줌
                   setState(() {
                     //화면갱신
                   });
