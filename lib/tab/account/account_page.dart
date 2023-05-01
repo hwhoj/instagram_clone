@@ -29,12 +29,12 @@ class AccountPage extends StatelessWidget {
                 Stack(
                   //사진위에 버튼을 겹쳐놓아야 하기때문에 사진이있는 사이즈박스를 스택으로 감싸줌
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       width: 80,
                       height: 80,
                       child: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            'https://dimg.donga.com/wps/NEWS/IMAGE/2022/08/17/114998051.2.jpg'),
+                        backgroundImage:
+                            NetworkImage(model.getProfileImageUrl()),
                       ),
                     ),
                     Container(
@@ -67,9 +67,9 @@ class AccountPage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 8),
-                const Text(
-                  '이름',
-                  style: TextStyle(
+                Text(
+                  model.getNickName(),
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),

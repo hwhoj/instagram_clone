@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/tab/home/home_model.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final model = HomeModel();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Instagram Clone'),
@@ -28,41 +31,45 @@ class HomePage extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       width: 80,
                       height: 80,
                       child: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            'https://dimg.donga.com/wps/NEWS/IMAGE/2022/08/17/114998051.2.jpg'),
+                        backgroundImage:
+                            NetworkImage(model.getProfileImageUrl()),
                       ),
                     ),
                     const SizedBox(height: 8),
-                    const Text(
-                      'musk@twitter.com',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    Text(
+                      model.getEmail(),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    const Text('닉네임'),
+                    Text(model.getNickName()),
                     Row(
-                      mainAxisSize: MainAxisSize.min,//로우는 기본적으로 화면을 가득 채우기때문에 크기를 줄여줌
+                      mainAxisSize: MainAxisSize.min,
+                      //로우는 기본적으로 화면을 가득 채우기때문에 크기를 줄여줌
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.network(
-                            'https://dimg.donga.com/wps/NEWS/IMAGE/2022/08/17/114998051.2.jpg',
-                        width: 70,
-                        height: 70,
-                        fit: BoxFit.cover,), //박스를 가득 채우는 효과
-                        SizedBox(width: 4),
+                          'https://dimg.donga.com/wps/NEWS/IMAGE/2022/08/17/114998051.2.jpg',
+                          width: 70,
+                          height: 70,
+                          fit: BoxFit.cover,
+                        ), //박스를 가득 채우는 효과
+                        const SizedBox(width: 4),
                         Image.network(
                           'https://dimg.donga.com/wps/NEWS/IMAGE/2022/08/17/114998051.2.jpg',
                           width: 70,
                           height: 70,
-                          fit: BoxFit.cover,),
-                        SizedBox(width: 4),
+                          fit: BoxFit.cover,
+                        ),
+                        const SizedBox(width: 4),
                         Image.network(
                           'https://dimg.donga.com/wps/NEWS/IMAGE/2022/08/17/114998051.2.jpg',
                           width: 70,
                           height: 70,
-                          fit: BoxFit.cover,),
+                          fit: BoxFit.cover,
+                        ),
                       ],
                     ),
                     const SizedBox(height: 8),
