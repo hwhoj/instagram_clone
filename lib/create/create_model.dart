@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/domain/post.dart';
 
@@ -21,6 +22,18 @@ class CreateModel {
   }
 
   Future<void> uploadPost(String title, File imageFile) async {
+    //이미지 업로드
+    //flutterfire > Cloud storage > upload files
+    final storageRef = FirebaseStorage.instance.ref();
+    final imageRef = storageRef
+        .child('postImages/${DateTime.now().millisecondsSinceEpoch}.png');
+
+    //이미지 url을 얻고
+    await imageRef.putFile(imageFile);
+    final downloadUrl = await imageRef.getDownloadURL();
+
+    //게시물 업로드
+
     //게시물 (포스트) 업로드하기위해 제목과 이미지파일을 받아오는 메소드
     //firestore_cloud 라이브러리를 추가
     //flutterfire > Cloud Firestore > usage > Writing Data에 있는 메소드 복붙
@@ -44,8 +57,7 @@ class CreateModel {
         //currentUser?.uid 커런트유저는 null일수있다, uid가 null일때 공백을 준다
         //커런트유저가 널이 아니면 uid을 리턴하고 어느쪽도 null이면 기본값으로 공백을준다.
         title: title,
-        imageUrl:
-            'https://dimg.donga.com/wps/NEWS/IMAGE/2022/08/17/114998051.2.jpg',
+        imageUrl: downloadUrl,
       ),
     );
   }
