@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/create/create_page.dart';
+import 'package:instagram_clone/detail_post/detail_post_page.dart';
 import 'package:instagram_clone/tab/search/search_model.dart';
 
 import '../../domain/post.dart';
@@ -52,9 +53,19 @@ class SearchPage extends StatelessWidget {
                 //그리드의 열을 3열로 만들어줌
                 itemBuilder: (BuildContext context, int index) {
                   final post = posts[index]; //posts의 인덱스를 가져와서 post에 넣어준다
-                  return Image.network(
-                    post.imageUrl,
-                    fit: BoxFit.cover,
+                  return GestureDetector(
+                    //서치 페이지에있는 사진을 클릭했을때
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DetailPostPage(post: post)),
+                      );
+                    },
+                    child: Image.network(
+                      post.imageUrl,
+                      fit: BoxFit.cover,
+                    ),
                   );
                 },
               );
