@@ -82,13 +82,23 @@ class AccountPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Column(
+                Column(
                   children: [
-                    Text(
-                      '3',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    Text(
+                    StreamBuilder<QuerySnapshot<Post>>(
+                        stream: model.postsStream,
+                        builder: (context, snapshot) {
+                          int count = 0;
+
+                          if (snapshot.hasData) {
+                            count = snapshot.data!.size;
+                          }
+
+                          return Text(
+                            '$count',
+                            style: const TextStyle(fontSize: 18),
+                          );
+                        }),
+                    const Text(
                       '게시물',
                       style: TextStyle(fontSize: 18),
                     ),
