@@ -62,9 +62,13 @@ class SearchPage extends StatelessWidget {
                             builder: (context) => DetailPostPage(post: post)),
                       );
                     },
-                    child: Image.network(
-                      post.imageUrl,
-                      fit: BoxFit.cover,
+                    child: Hero(
+                      //Hero위젯으로 사진 클릭했을때 애니메이션적용가능, 클릭했을때 나오는 사진에도 똑같이 Hero해주면된다
+                      tag: post.id,
+                      child: Image.network(
+                        post.imageUrl,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   );
                 },
