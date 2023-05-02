@@ -34,9 +34,12 @@ class CreateModel {
               fromFirestore: (snapshot, _) => Post.fromJson(snapshot.data()!),
               toFirestore: (post, _) => post.toJson(),
             );
+    final newPostref = postsRef.doc();
+    //문서를 생성하지않아도 새로운 문서의 주소를 미리 만들어볼수있다
 
-    postsRef.add(
+    newPostref.set(
       Post(
+        id: newPostref.id, //사전에 문서의 id를 얻어옴(문서 삭제기능을 위해)
         userId: FirebaseAuth.instance.currentUser?.uid ?? '',
         //currentUser?.uid 커런트유저는 null일수있다, uid가 null일때 공백을 준다
         //커런트유저가 널이 아니면 uid을 리턴하고 어느쪽도 null이면 기본값으로 공백을준다.

@@ -15,6 +15,8 @@ class _CreatePageState extends State<CreatePage> {
   final _titleTextController = TextEditingController();
   File? _image; //null을 허용해주기위해서(처음에 사진이없는상태이니까) ?를 붙여줌
 
+  bool _isLoading = false;
+
   @override
   void dispose() {
     _titleTextController.dispose();
@@ -29,9 +31,26 @@ class _CreatePageState extends State<CreatePage> {
         title: const Text('새 게시물'),
         actions: [
           IconButton(
-            onPressed: () {
+            onPressed: () async {
               if (_image != null && _titleTextController.text.isNotEmpty) {
-                model.uploadPost(_titleTextController.text, _image!);
+                setState(() {
+                  _isLoading = true;
+                });
+                await model.uploadPost(
+                  _titleTextController.text,
+                  _image!,
+                );
+
+                setState(() {
+                  _isLoading = false;
+                });
+
+                if (mounted) {
+                  //mounted > async는 오래걸리는건데 만약 Navigator.pop(context);
+                  //화면까지 살아있다면 아래 코드를 실행하고 살아있지않다면 패스
+                  Navigator.pop(context);
+                  //비동기(async) 코드 내부에서 context를 쓰면 노란불뜸
+                }
               }
             },
             icon: const Icon(Icons.send),
@@ -58,11 +77,12 @@ class _CreatePageState extends State<CreatePage> {
                     fillColor: Colors.white70),
               ),
               const SizedBox(height: 20),
+              if(_isLoading) const CircularProgressIndicator(),
               ElevatedButton(
                 onPressed: () async {
                   //이미지 피커 실행(라이브러리 추가 필요)
-                  _image =
-                  await model.getImage(); //Future 타입을 받아오는거기때문에 await, async 써줌
+                  _image = await model
+                      .getImage(); //Future 타입을 받아오는거기때문에 await, async 써줌
                   setState(() {
                     //화면갱신
                   });
